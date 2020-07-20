@@ -1,2 +1,2 @@
 # coronavirusScrap
-Web-scrapping website that displays total corona virus cases in different countries around the world
+Python script used for web-scrapping a website that displays total corona virus cases in different countries around the world
