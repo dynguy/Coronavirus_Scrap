@@ -49,8 +49,9 @@ country_labels = []
 confirmed_bars = []
 deaths_bars = []
 bar_width = 0.45
-fig, ax = plt.subplots()  # Note: fig is figure
-
+fig, (ax1, ax2) = plt.subplots(1, 2)  # Note: fig is figure
+fig.suptitle('Top 5 Countries most affected by Coronavirus')
+fig.set_size_inches(10, 7)
 # Takes the first 5 countries from data list for now
 for tuple_value in data[:5]:
     country_labels.append(tuple_value[0])
@@ -58,17 +59,22 @@ for tuple_value in data[:5]:
     deaths_bars.append(tuple_value[2])
 
 x = np.arange(len(country_labels))
-rects1 = ax.bar(x - bar_width / 2, confirmed_bars, bar_width, label='Confirmed', color=['teal'])
-rects2 = ax.bar(x + bar_width / 2, deaths_bars, bar_width, label='Deaths', color=['red'])
 
-ax.set_ylabel('Total Cases and Deaths by Millions')
-ax.set_title('Top 5 Countries with Confirmed Coronavirus Cases')
-ax.set_xticks(x)
-ax.set_xticklabels(country_labels)
-ax.legend()
+rects1 = ax1.bar(x - bar_width / 2, confirmed_bars, bar_width, label='Confirmed', color=['teal'])
+rects2 = ax2.bar(x + bar_width / 2, deaths_bars, bar_width, label='Deaths', color=['red'])
 
+ax1.set_ylabel('Total Confirmed Cases by Millions')
+# ax1.set_title('Top 5 Countries most affected by Coronavirus')
+ax1.set_xticks(x)
+ax1.set_xticklabels(country_labels)
+ax1.legend()
 
-def quick_label(rects):
+ax2.set_ylabel('Total Death Cases')
+ax2.set_xticks(x)
+ax2.set_xticklabels(country_labels)
+ax2.legend()
+
+def quick_label(rects, ax):
     """Creates a text number label above each bar in *rects*, displaying totals."""
     for rect in rects:
         height = rect.get_height()
@@ -78,8 +84,8 @@ def quick_label(rects):
                     ha='center', va='bottom')
 
 
-quick_label(rects1)
-quick_label(rects2)
+quick_label(rects1, ax1)
+quick_label(rects2, ax2)
 
 # Gets the final graph displayed
 fig.tight_layout()
