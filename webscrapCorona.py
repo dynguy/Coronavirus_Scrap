@@ -52,6 +52,7 @@ bar_width = 0.45
 fig, (ax1, ax2) = plt.subplots(1, 2)  # Note: fig is figure
 fig.suptitle('Top 5 Countries most affected by Coronavirus')
 fig.set_size_inches(10, 7)
+
 # Takes the first 5 countries from data list for now
 for tuple_value in data[:5]:
     country_labels.append(tuple_value[0])
@@ -60,15 +61,16 @@ for tuple_value in data[:5]:
 
 x = np.arange(len(country_labels))
 
+# Total Confirmed Cases Portion on Bar Graph
 rects1 = ax1.bar(x - bar_width / 2, confirmed_bars, bar_width, label='Confirmed', color=['teal'])
-rects2 = ax2.bar(x + bar_width / 2, deaths_bars, bar_width, label='Deaths', color=['red'])
-
 ax1.set_ylabel('Total Confirmed Cases by Millions')
 # ax1.set_title('Top 5 Countries most affected by Coronavirus')
 ax1.set_xticks(x)
 ax1.set_xticklabels(country_labels)
 ax1.legend()
 
+# Total Confirmed Death Cases Portion on Bar Graph
+rects2 = ax2.bar(x + bar_width / 2, deaths_bars, bar_width, label='Deaths', color=['red'])
 ax2.set_ylabel('Total Death Cases')
 ax2.set_xticks(x)
 ax2.set_xticklabels(country_labels)
@@ -91,7 +93,7 @@ quick_label(rects2, ax2)
 fig.tight_layout()
 plt.show()
 
-# Texttable code used to view data from initial web-scrape
+# Texttable code used to view data from initial web-scrape, used for testing purposes
 # create texttable object
 # table = Texttable()
 # table.add_rows([(None, None, None, None)] + data)  # Adds an empty row at the beginning for the headers
