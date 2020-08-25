@@ -73,6 +73,7 @@ print(cases_of_country(data, 'Brazil'))
 print(top_affected_countries(data))
 
 
+
 # matplotlib setup portion
 # country_labels = []
 # confirmed_bars = []
