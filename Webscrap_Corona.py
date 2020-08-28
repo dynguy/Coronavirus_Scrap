@@ -1,12 +1,13 @@
 # Modules needed
 import requests
 from bs4 import BeautifulSoup
-# from texttable import Texttable
 import numpy as np
-# import matplotlib
 import matplotlib.pyplot as plt
 
-# arr = np.asarray(data)  # Converts list to numpy array
+
+# from texttable import Texttable
+# import matplotlib
+
 
 def webscrap():
     url = 'https://www.worldometers.info/coronavirus/countries-where-coronavirus-has-spread/'
@@ -15,7 +16,7 @@ def webscrap():
     page_content = requests.get(url)
     soup = BeautifulSoup(page_content.text, 'html.parser')
 
-    data = []
+    web_data = []
 
     # soup.find_all('td') will scrape all elements in the url's table elements
     data_iterator = iter(soup.find_all('td'))
@@ -33,7 +34,7 @@ def webscrap():
             continent = continent.replace(' ', '_')
             # This just adds stats into the list while also replacing the confirmed and deaths into ints
             # NOTE: This creates a list of tuples
-            data.append((country,
+            web_data.append((country,
                          int(confirmed.replace(',', '')),  # This allows for numbers in millions
                          int(deaths.replace(',', '')),
                          continent
@@ -44,17 +45,15 @@ def webscrap():
             break
 
     #  Sorts the data by number of confirmed cases
-    data.sort(key=lambda row: row[1], reverse=True)
+    web_data.sort(key=lambda row: row[1], reverse=True)
     print(data)
 
-    # returns list of tuples
-    # return data
-
     f = open('webscrap_data.txt', 'w')
-    for tuple in data:
+    for tuple in web_data:
         f.write(''.join(str(s) + ' ' for s in tuple) + ' \n')
 
     f.close()
+
 
 def deaths_of_country(data, country):
     counter = 0
@@ -63,12 +62,14 @@ def deaths_of_country(data, country):
 
     return data[counter][2]
 
+
 def cases_of_country(data, country):
     counter = 0
     while country != data[counter][0]:
         counter = counter + 1
 
     return data[counter][1]
+
 
 def top_affected_countries(data):
     countries = []
@@ -77,9 +78,10 @@ def top_affected_countries(data):
 
     return countries
 
+
 def read_data():
     f = open('webscrap_data.txt')
-    data = []
+    file_data = []
 
     for line in f:
         line = line.rstrip(' \n')
@@ -87,29 +89,15 @@ def read_data():
         #     line_edited = tuple(int(line))
         # else:
         line_edited = tuple(map(str, line.split(' ')))
-        data.append(line_edited)
+        file_data.append(line_edited)
 
-    return data
+    return file_data
+
 
 # webscrap()
+# arr = np.asarray(data)  # Converts list to numpy array
 data = read_data()
-print(data)
-
-
 # print(data)
-# for t in data:
-#     print(t)
-
-# print(arr)
-# print(data[1][2])
-# print(deaths_of_country(data, 'Brazil'))
-#
-# print(data[1][1])
-# print(cases_of_country(data, 'Brazil'))
-#
-# print(top_affected_countries(data))
-
-
 
 # matplotlib setup portion
 country_labels = []
@@ -142,6 +130,7 @@ ax2.set_ylabel('Total Death Cases')
 ax2.set_xticks(x)
 ax2.set_xticklabels(country_labels)
 ax2.legend()
+
 
 def quick_label(rects, ax):
     """Creates a text number label above each bar in *rects*, displaying totals."""
