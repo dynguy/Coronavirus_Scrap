@@ -6,43 +6,110 @@ import numpy as np
 # import matplotlib
 import matplotlib.pyplot as plt
 
-# url of website to scrap
-url = 'https://www.worldometers.info/coronavirus/countries-where-coronavirus-has-spread/'
+# arr = np.asarray(data)  # Converts list to numpy array
 
-# gets the url's html
-page_content = requests.get(url)
-soup = BeautifulSoup(page_content.text, 'html.parser')
+def webscrap():
+    url = 'https://www.worldometers.info/coronavirus/countries-where-coronavirus-has-spread/'
 
-data = []
+    # gets the url's html
+    page_content = requests.get(url)
+    soup = BeautifulSoup(page_content.text, 'html.parser')
 
-# soup.find_all('td') will scrape all elements in the url's table elements
-data_iterator = iter(soup.find_all('td'))
+    data = []
 
-# Loop that repeats until there is no data left available for the iterator
-while True:
-    try:
-        country = next(data_iterator).text
-        confirmed = next(data_iterator).text
-        deaths = next(data_iterator).text
-        continent = next(data_iterator).text
+    # soup.find_all('td') will scrape all elements in the url's table elements
+    data_iterator = iter(soup.find_all('td'))
 
-        # This just adds stats into the list while also replacing the confirmed and deaths into ints
-        # NOTE: This creates a list of tuples
-        data.append((country,
-                     int(confirmed.replace(',', '')),  # This allows for numbers in millions
-                     int(deaths.replace(',', '')),
-                     continent
-                     ))
+    # Loop that repeats until there is no data left available for the iterator
+    while True:
+        try:
+            country = next(data_iterator).text
+            confirmed = next(data_iterator).text
+            deaths = next(data_iterator).text
+            continent = next(data_iterator).text
 
-    # StopIteration error occurs when there are no more elements to iterate through
-    except StopIteration:
-        break
+            # Replaces spaces with underscores in country and continent names to help with saving file content later
+            country = country.replace(' ', '_')
+            continent = continent.replace(' ', '_')
+            # This just adds stats into the list while also replacing the confirmed and deaths into ints
+            # NOTE: This creates a list of tuples
+            data.append((country,
+                         int(confirmed.replace(',', '')),  # This allows for numbers in millions
+                         int(deaths.replace(',', '')),
+                         continent
+                         ))
 
-#  Sorts the data by number of confirmed cases
-data.sort(key=lambda row: row[1], reverse=True)
+        # StopIteration error occurs when there are no more elements to iterate through
+        except StopIteration:
+            break
 
-# arr = np.asarray(data) # Converts list to numpy array
+    #  Sorts the data by number of confirmed cases
+    data.sort(key=lambda row: row[1], reverse=True)
+    print(data)
+
+    # returns list of tuples
+    # return data
+
+    f = open('webscrap_data.txt', 'w')
+    for tuple in data:
+        f.write(''.join(str(s) + ' ' for s in tuple) + ' \n')
+
+    f.close()
+
+def deaths_of_country(data, country):
+    counter = 0
+    while country != data[counter][0]:
+        counter = counter + 1
+
+    return data[counter][2]
+
+def cases_of_country(data, country):
+    counter = 0
+    while country != data[counter][0]:
+        counter = counter + 1
+
+    return data[counter][1]
+
+def top_affected_countries(data):
+    countries = []
+    for tuple_value in data[:5]:
+        countries.append(tuple_value[0])
+
+    return countries
+
+def read_data():
+    f = open('webscrap_data.txt')
+    data = []
+
+    for line in f:
+        line = line.rstrip(' \n')
+        # if line.isdigit():
+        #     line_edited = tuple(int(line))
+        # else:
+        line_edited = tuple(map(str, line.split(' ')))
+        data.append(line_edited)
+
+    return data
+
+# webscrap()
+data = read_data()
+print(data)
+
+
+# print(data)
+# for t in data:
+#     print(t)
+
 # print(arr)
+# print(data[1][2])
+# print(deaths_of_country(data, 'Brazil'))
+#
+# print(data[1][1])
+# print(cases_of_country(data, 'Brazil'))
+#
+# print(top_affected_countries(data))
+
+
 
 # matplotlib setup portion
 country_labels = []
@@ -56,14 +123,14 @@ fig.set_size_inches(10, 7)
 # Takes the first 5 countries from data list for now
 for tuple_value in data[:5]:
     country_labels.append(tuple_value[0])
-    confirmed_bars.append(tuple_value[1])
-    deaths_bars.append(tuple_value[2])
+    confirmed_bars.append(int(tuple_value[1]))
+    deaths_bars.append(int(tuple_value[2]))
 
 x = np.arange(len(country_labels))
 
 # Total Confirmed Cases Portion on Bar Graph
 rects1 = ax1.bar(x - bar_width / 2, confirmed_bars, bar_width, label='Confirmed', color=['teal'])
-ax1.set_ylabel('Total Confirmed Cases by Millions')
+ax1.set_ylabel('Total Confirmed Cases (Millions)')
 # ax1.set_title('Top 5 Countries most affected by Coronavirus')
 ax1.set_xticks(x)
 ax1.set_xticklabels(country_labels)
