@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 
 
 def webscrap():
+    """Webscraps the worldometers website for coronavirus statistics and saves information into textfile"""
     url = 'https://www.worldometers.info/coronavirus/countries-where-coronavirus-has-spread/'
 
     # gets the url's html
@@ -56,6 +57,7 @@ def webscrap():
 
 
 def deaths_of_country(data, country):
+    """Returns the number of deaths caused by coronavirus of the chosen country"""
     counter = 0
     while country != data[counter][0]:
         counter = counter + 1
@@ -64,6 +66,7 @@ def deaths_of_country(data, country):
 
 
 def cases_of_country(data, country):
+    """Returns the number of coronavirus cases of the chosen country"""
     counter = 0
     while country != data[counter][0]:
         counter = counter + 1
@@ -72,6 +75,7 @@ def cases_of_country(data, country):
 
 
 def top_affected_countries(data):
+    """Returns a list of names of the top 5 countries with the most coronavirus cases"""
     countries = []
     for tuple_value in data[:5]:
         countries.append(tuple_value[0])
@@ -80,6 +84,7 @@ def top_affected_countries(data):
 
 
 def read_data():
+    """Reads data from textfile rather than consistently calling the webscrap function"""
     f = open('webscrap_data.txt')
     file_data = []
 
@@ -105,6 +110,7 @@ def quick_label(rects, ax):
 
 
 def graph_top_affected_countries(data):
+    """Creates two bar graphs and displays the information side by side."""
     # matplotlib setup portion
     country_labels = []
     confirmed_bars = []
