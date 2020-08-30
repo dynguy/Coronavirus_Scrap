@@ -128,7 +128,7 @@ def graph_top_affected_countries_c(sent_data):
     # Total Confirmed Cases Portion on Bar Graph
     rects1 = ax1.bar(x - bar_width / 2, confirmed_bars, bar_width, label='Confirmed', color=['teal'])
     ax1.set_ylabel('Total Confirmed Cases (Millions)')
-    #ax1.set_title('Top 5 Countries most affected by Coronavirus')
+    # ax1.set_title('Top 5 Countries most affected by Coronavirus')
     ax1.set_xticks(x)
     ax1.set_xticklabels(country_labels)
     ax1.legend()
@@ -136,7 +136,9 @@ def graph_top_affected_countries_c(sent_data):
 
     # Gets the final graph displayed
     fig.tight_layout()
+    # plt.savefig('images/Coronavirus_Confirmed_Cases_Graph.png')
     plt.show()
+
 
 def graph_top_affected_countries_d(sent_data):
     """Creates a singular bar graph that displays the most affected countries' deaths caused by coronavirus."""
@@ -158,7 +160,7 @@ def graph_top_affected_countries_d(sent_data):
     # Total Confirmed Cases Portion on Bar Graph
     rects1 = ax1.bar(x - bar_width / 2, deaths_bars, bar_width, label='Confirmed', color=['red'])
     ax1.set_ylabel('Total Confirmed Cases (Millions)')
-    #ax1.set_title('Top 5 Countries most affected by Coronavirus')
+    # ax1.set_title('Top 5 Countries most affected by Coronavirus')
     ax1.set_xticks(x)
     ax1.set_xticklabels(country_labels)
     ax1.legend()
@@ -166,7 +168,9 @@ def graph_top_affected_countries_d(sent_data):
 
     # Gets the final graph displayed
     fig.tight_layout()
+    # plt.savefig('images/Coronavirus_Death_Cases_Graph.png')
     plt.show()
+
 
 def graph_top_affected_countries_cd(sent_data):
     """Creates two bar graphs and displays the information side by side."""
@@ -207,12 +211,13 @@ def graph_top_affected_countries_cd(sent_data):
 
     # Gets the final graph displayed
     fig.tight_layout()
+    #plt.savefig('images/Confirmed_and_Death_Cases_Graph.png')
     plt.show()
 
 
 # arr = np.asarray(data)  # Converts list to numpy array
 data = read_data()
-graph_top_affected_countries_d(data)
+graph_top_affected_countries_c(data)
 
 # Texttable code used to view data from initial web-scrape, used for testing purposes
 # create texttable object
