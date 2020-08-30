@@ -49,8 +49,8 @@ def webscrap():
     web_data.sort(key=lambda row: row[1], reverse=True)
 
     f = open('webscrap_data.txt', 'w')
-    for tuple in web_data:
-        f.write(''.join(str(s) + ' ' for s in tuple) + ' \n')
+    for tuple_unit in web_data:
+        f.write(''.join(str(s) + ' ' for s in tuple_unit) + ' \n')
 
     f.close()
 
@@ -119,7 +119,7 @@ def graph_top_affected_countries_c(sent_data):
     fig.set_size_inches(10, 7)
 
     # Takes the first 5 countries from data list for now
-    for tuple_value in data[:5]:
+    for tuple_value in sent_data[:5]:
         country_labels.append(tuple_value[0])
         confirmed_bars.append(int(tuple_value[1]))
 
@@ -151,7 +151,7 @@ def graph_top_affected_countries_d(sent_data):
     fig.set_size_inches(10, 7)
 
     # Takes the first 5 countries from data list for now
-    for tuple_value in data[:5]:
+    for tuple_value in sent_data[:5]:
         country_labels.append(tuple_value[0])
         deaths_bars.append(int(tuple_value[2]))
 
@@ -184,7 +184,7 @@ def graph_top_affected_countries_cd(sent_data):
     fig.set_size_inches(10, 7)
 
     # Takes the first 5 countries from data list for now
-    for tuple_value in data[:5]:
+    for tuple_value in sent_data[:5]:
         country_labels.append(tuple_value[0])
         confirmed_bars.append(int(tuple_value[1]))
         deaths_bars.append(int(tuple_value[2]))
@@ -216,8 +216,8 @@ def graph_top_affected_countries_cd(sent_data):
 
 
 # arr = np.asarray(data)  # Converts list to numpy array
-data = read_data()
-graph_top_affected_countries_c(data)
+# data = read_data()
+# graph_top_affected_countries_c(data)
 
 # Texttable code used to view data from initial web-scrape, used for testing purposes
 # create texttable object
