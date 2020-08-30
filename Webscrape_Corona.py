@@ -47,7 +47,6 @@ def webscrap():
 
     #  Sorts the data by number of confirmed cases
     web_data.sort(key=lambda row: row[1], reverse=True)
-    print(data)
 
     f = open('webscrap_data.txt', 'w')
     for tuple in web_data:
@@ -109,7 +108,38 @@ def quick_label(rects, ax):
                     ha='center', va='bottom')
 
 
-def graph_top_affected_countries(data):
+def graph_top_affected_countries(sent_data):
+    """Creates a singular bar graph that displays the confirmed cases."""
+    # matplotlib setup portion
+    country_labels = []
+    confirmed_bars = []
+    bar_width = 0.5
+    fig, ax1 = plt.subplots()
+    fig.suptitle('Top 5 Countries Most Affected By Coronavirus')
+    fig.set_size_inches(10, 7)
+
+    # Takes the first 5 countries from data list for now
+    for tuple_value in data[:5]:
+        country_labels.append(tuple_value[0])
+        confirmed_bars.append(int(tuple_value[1]))
+
+    x = np.arange(len(country_labels))
+
+    # Total Confirmed Cases Portion on Bar Graph
+    rects1 = ax1.bar(x - bar_width / 2, confirmed_bars, bar_width, label='Confirmed', color=['teal'])
+    ax1.set_ylabel('Total Confirmed Cases (Millions)')
+    #ax1.set_title('Top 5 Countries most affected by Coronavirus')
+    ax1.set_xticks(x)
+    ax1.set_xticklabels(country_labels)
+    ax1.legend()
+    quick_label(rects1, ax1)
+
+    # Gets the final graph displayed
+    fig.tight_layout()
+    plt.show()
+
+
+def graph_top_affected_countries_cd(sent_data):
     """Creates two bar graphs and displays the information side by side."""
     # matplotlib setup portion
     country_labels = []
@@ -117,7 +147,7 @@ def graph_top_affected_countries(data):
     deaths_bars = []
     bar_width = 0.45
     fig, (ax1, ax2) = plt.subplots(1, 2)  # Note: fig is figure
-    fig.suptitle('Top 5 Countries most affected by Coronavirus')
+    fig.suptitle('Top 5 Countries Most Affected By Coronavirus')
     fig.set_size_inches(10, 7)
 
     # Takes the first 5 countries from data list for now
@@ -150,7 +180,7 @@ def graph_top_affected_countries(data):
     fig.tight_layout()
     plt.show()
 
-# webscrap()
+
 # arr = np.asarray(data)  # Converts list to numpy array
 data = read_data()
 graph_top_affected_countries(data)
