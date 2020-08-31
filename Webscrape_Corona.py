@@ -9,8 +9,8 @@ import matplotlib.pyplot as plt
 # import matplotlib
 
 
-def webscrap():
-    """Webscraps the worldometers website for coronavirus statistics and saves information into textfile"""
+def webscrape():
+    """Webscrapes the worldometers website for coronavirus statistics and saves information into textfile"""
     url = 'https://www.worldometers.info/coronavirus/countries-where-coronavirus-has-spread/'
 
     # gets the url's html
