@@ -48,7 +48,7 @@ def webscrape():
     #  Sorts the data by number of confirmed cases
     web_data.sort(key=lambda row: row[1], reverse=True)
 
-    f = open('webscrap_data.txt', 'w')
+    f = open('webscrape_data.txt', 'w')
     for tuple_unit in web_data:
         f.write(''.join(str(s) + ' ' for s in tuple_unit) + ' \n')
 
@@ -84,7 +84,7 @@ def top_affected_countries(data):
 
 def read_data():
     """Reads data from textfile rather than consistently calling the webscrap function"""
-    f = open('webscrap_data.txt')
+    f = open('webscrape_data.txt')
     file_data = []
 
     for line in f:

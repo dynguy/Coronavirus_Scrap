@@ -1,5 +1,5 @@
 venv/*
 .idea/*
 .DS_Store
-webscrap_data.txt
-
+webscrape_data.txt
+.ipynb_checkpoints/
