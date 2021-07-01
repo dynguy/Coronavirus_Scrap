@@ -8,6 +8,8 @@ Summer 2020 Project: Python Web Scrapper used for web-scraping statistics [websi
 
 ### Summer 2021 Update:
 - Updated code and transferred code to Jupyter Notebook
+- Saves data to CSV now instead of text file
+- All graphs viewable on Jupyter Notebook
 
 # Example Output
 ![](images/Example_Generated_Graphs.png)
